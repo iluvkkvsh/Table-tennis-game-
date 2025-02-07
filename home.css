@@ -1,0 +1,234 @@
+/* home.css */
+body {
+  margin: 0;
+  background: #1a1a1a;
+  font-family: 'Press Start 2P', cursive;
+  color: #fff;
+  overflow: hidden;
+  position: relative;
+  background: radial-gradient(circle, #0a0a0a 0%, #000 100%);
+}
+
+/* CRT Effect */
+.crt {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  pointer-events: none;
+  background: linear-gradient(rgba(18, 16, 16, 0.1) 50%, rgba(0, 0, 0, 0.25) 50%);
+  background-size: 100% 4px;
+  animation: scanline 6s linear infinite;
+}
+
+.crt::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, 
+    rgba(0, 255, 0, 0.06) 0%,
+    rgba(0, 0, 0, 0) 3%,
+    rgba(0, 255, 0, 0.06) 6%,
+    rgba(0, 0, 0, 0) 10%
+  );
+  animation: flicker 0.15s infinite;
+}
+
+/* Falling Blocks */
+.falling-blocks {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.tetromino {
+  position: absolute;
+  opacity: 0.2;
+  animation: fall 10s linear infinite;
+}
+
+.tetromino.I { 
+  width: 40px; height: 160px;
+  background: #00f0f0;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 25%, 25% 25%, 25% 75%, 100% 75%, 100% 100%, 0% 100%);
+}
+.tetromino.O { 
+  width: 80px; height: 80px;
+  background: #f0f000;
+}
+.tetromino.T { 
+  width: 120px; height: 40px;
+  background: #a000f0;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 75% 100%, 75% 50%, 25% 50%, 0% 100%, 25% 100%);
+}
+/* Add other tetromino shapes... */
+
+/* Home Container */
+.home-container {
+  position: relative;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 1s;
+  z-index: 1;
+}
+
+/* Title Styles */
+.pixelated-title {
+  font-size: 3rem;
+  text-shadow: 4px 4px #000;
+  margin: 2rem 0;
+  transform: skew(-5deg);
+  animation: titleShake 2s infinite;
+}
+
+.neon-text {
+  color: #0ff;
+  text-shadow: 0 0 10px #0ff,
+               0 0 20px #0ff,
+               0 0 30px #0ff;
+}
+
+.title-border {
+  height: 4px;
+  background: linear-gradient(90deg, #0ff 0%, #f0f 100%);
+  margin: 1rem auto;
+  width: 50%;
+  animation: borderFlow 3s linear infinite;
+}
+
+/* Leaderboard */
+.leaderboard-preview {
+  background: rgba(0, 0, 0, 0.7);
+  border: 4px solid #444;
+  padding: 1rem;
+  margin: 2rem auto;
+  width: 70%;
+}
+
+.score-list {
+  list-style: none;
+  padding: 0;
+}
+
+.score-entry {
+  padding: 0.5rem;
+  margin: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+}
+
+.rank { color: #ff0; }
+.score { color: #0f0; }
+
+/* Buttons */
+.pixel-button {
+  display: inline-block;
+  padding: 1rem 2rem;
+  margin: 1rem;
+  background: #00f;
+  color: #fff;
+  border: 4px solid #000;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.1s;
+  text-decoration: none;
+  box-shadow: 4px 4px 0 #000;
+}
+
+.pixel-button:hover {
+  background: #00a;
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #000;
+}
+
+.pixel-button:active {
+  background: #f00;
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 #000;
+}
+
+/* Instructions */
+.control-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.control-item {
+  padding: 1rem;
+  border: 2px solid #fff;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Animations */
+@keyframes fall {
+  from { transform: translateY(-100vh) rotate(0deg); }
+  to { transform: translateY(100vh) rotate(360deg); }
+}
+
+@keyframes scanline {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100%; }
+}
+
+@keyframes flicker {
+  0% { opacity: 0.9; }
+  20% { opacity: 0.95; }
+  40% { opacity: 0.85; }
+  60% { opacity: 1; }
+  80% { opacity: 0.9; }
+  100% { opacity: 0.95; }
+}
+
+@keyframes titleShake {
+  0%, 100% { transform: skew(-5deg) translate(0, 0); }
+  50% { transform: skew(5deg) translate(2px, 2px); }
+}
+
+@keyframes borderFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.glow {
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+/* Scanline Effect */
+.scanline {
+  position: relative;
+  overflow: hidden;
+}
+
+.scanline::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15) 0px,
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  animation: scanlineMove 10s linear infinite;
+}
