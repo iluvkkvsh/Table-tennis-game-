@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retro Tetris - Arcade Fun</title>
+  <link rel="stylesheet" href="home.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+  </style>
+</head>
+<body>
+  <div class="crt"></div>
+  
+  <div class="falling-blocks"></div>
+
+  <div class="home-container">
+    <div class="title-box">
+      <h1 class="pixelated-title neon-text">RETRO TETRIS</h1>
+      <div class="title-border"></div>
+    </div>
+
+    <p class="tagline glow">»»» A NOSTALGIC JOURNEY «««</p>
+
+    <div class="leaderboard-preview scanline">
+      <h3>TOP SCORES</h3>
+      <ul class="score-list">
+        <li class="score-entry"><span class="rank">1.</span> TETRIS-KING <span class="score">999,999</span></li>
+        <li class="score-entry"><span class="rank">2.</span> BLOCK-MASTER <span class="score">888,888</span></li>
+        <li class="score-entry"><span class="rank">3.</span> RETRO-GAMER <span class="score">777,777</span></li>
+      </ul>
+    </div>
+
+    <div class="button-group">
+      <a href="tetrisgame.html" class="start-btn pixel-button">START GAME</a>
+      <button class="pixel-button" id="music-toggle">♪ TOGGLE MUSIC</button>
+    </div>
+
+    <div class="instructions scanline">
+      <h3 class="glow">≡ CONTROLS ≡</h3>
+      <div class="control-grid">
+        <div class="control-item">← → : MOVE</div>
+        <div class="control-item">↑ : ROTATE</div>
+        <div class="control-item">↓ : DROP</div>
+        <div class="control-item">SPACE : HARD DROP</div>
+      </div>
+    </div>
+  </div>
+
+  <audio loop id="background-music">
+    <source src="retro-tetris-theme.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="click-sound" src="blip-select.wav"></audio>
+
+  <script>
+    function createFallingBlocks() {
+      const container = document.querySelector('.falling-blocks');
+      const shapes = ['I', 'O', 'T', 'S', 'Z', 'J', 'L'];
+      
+      for (let i = 0; i < 20; i++) {
+        const block = document.createElement('div');
+        block.className = `tetromino ${shapes[Math.floor(Math.random() * shapes.length)]}`;
+        block.style.left = `${Math.random() * 100}%`;
+        block.style.animationDelay = `${Math.random() * 5}s`;
+        container.appendChild(block);
+      }
+    }
+
+    const music = document.getElementById('background-music');
+    const clickSound = document.getElementById('click-sound');
+    let musicPlaying = false;
+
+    document.getElementById('music-toggle').addEventListener('click', () => {
+      musicPlaying = !musicPlaying;
+      musicPlaying ? music.play() : music.pause();
+      clickSound.play();
+    });
+
+    document.querySelectorAll('.pixel-button').forEach(button => {
+      button.addEventListener('mouseenter', () => clickSound.play());
+    });
+
+    createFallingBlocks();
+    document.querySelector('.home-container').style.opacity = '1';
+  </script>
+</body>
+</html>
